@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../../prisma/prisma.service';
-import { CreateScheduleDto } from './dto/create-schedule.dto';
-import { UpdateScheduleDto } from './dto/update-schedule.dto';
+import { Injectable } from "@nestjs/common";
+import { PrismaService } from "../../prisma/prisma.service";
+import { CreateScheduleDto } from "./dto/create-schedule.dto";
+import { UpdateScheduleDto } from "./dto/update-schedule.dto";
 
 @Injectable()
 export class ScheduleService {
@@ -20,7 +20,10 @@ export class ScheduleService {
   }
 
   async update(id: string, updateScheduleDto: UpdateScheduleDto) {
-    return this.prisma.schedule.update({ where: { id }, data: updateScheduleDto });
+    return this.prisma.schedule.update({
+      where: { id },
+      data: updateScheduleDto,
+    });
   }
 
   async remove(id: string) {

@@ -1,6 +1,6 @@
-import { IsNotEmpty, IsInt, IsDate, IsUUID, IsEnum } from 'class-validator';
-import { Transform } from 'class-transformer';
-import { TaskType } from '@prisma/client';
+import { IsNotEmpty, IsInt, IsDate, IsUUID, IsEnum } from "class-validator";
+import { Transform } from "class-transformer";
+import { TaskType } from "@prisma/client";
 
 export class CreateTaskDto {
   @IsNotEmpty()

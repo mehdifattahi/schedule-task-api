@@ -1,15 +1,28 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, ParseUUIDPipe, NotFoundException } from '@nestjs/common';
-import { ScheduleService } from './schedule.service';
-import { CreateScheduleDto } from './dto/create-schedule.dto';
-import { UpdateScheduleDto } from './dto/update-schedule.dto';
-import { Schedule } from '@prisma/client';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ValidationPipe,
+  ParseUUIDPipe,
+  NotFoundException,
+} from "@nestjs/common";
+import { ScheduleService } from "./schedule.service";
+import { CreateScheduleDto } from "./dto/create-schedule.dto";
+import { UpdateScheduleDto } from "./dto/update-schedule.dto";
+import { Schedule } from "@prisma/client";
 
-@Controller('schedules')
+@Controller("schedules")
 export class ScheduleController {
   constructor(private readonly scheduleService: ScheduleService) {}
 
   @Post()
-  async create(@Body(ValidationPipe) createScheduleDto: CreateScheduleDto): Promise<Schedule> {
+  async create(
+    @Body(ValidationPipe) createScheduleDto: CreateScheduleDto,
+  ): Promise<Schedule> {
     return this.scheduleService.create(createScheduleDto);
   }
 
@@ -18,8 +31,8 @@ export class ScheduleController {
     return this.scheduleService.findAll();
   }
 
-  @Get(':id')
-  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<Schedule> {
+  @Get(":id")
+  async findOne(@Param("id", ParseUUIDPipe) id: string): Promise<Schedule> {
     const schedule = await this.scheduleService.findOne(id);
     if (!schedule) {
       throw new NotFoundException(`Schedule with ID ${id} not found`);
@@ -27,16 +40,16 @@ export class ScheduleController {
     return schedule;
   }
 
-  @Patch(':id')
+  @Patch(":id")
   async update(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body(ValidationPipe) updateScheduleDto: UpdateScheduleDto
+    @Param("id", ParseUUIDPipe) id: string,
+    @Body(ValidationPipe) updateScheduleDto: UpdateScheduleDto,
   ): Promise<Schedule> {
     return this.scheduleService.update(id, updateScheduleDto);
   }
 
-  @Delete(':id')
-  async remove(@Param('id', ParseUUIDPipe) id: string): Promise<Schedule> {
+  @Delete(":id")
+  async remove(@Param("id", ParseUUIDPipe) id: string): Promise<Schedule> {
     return this.scheduleService.remove(id);
   }
 }

@@ -1,5 +1,5 @@
-import { IsNotEmpty, IsInt, IsDate } from 'class-validator';
-import { Type, Transform } from 'class-transformer';
+import { IsNotEmpty, IsInt, IsDate } from "class-validator";
+import { Type, Transform } from "class-transformer";
 
 export class CreateScheduleDto {
   @IsNotEmpty()

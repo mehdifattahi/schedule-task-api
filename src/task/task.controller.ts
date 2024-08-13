@@ -1,15 +1,28 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ValidationPipe, ParseUUIDPipe, NotFoundException } from '@nestjs/common';
-import { TaskService } from './task.service';
-import { CreateTaskDto } from './dto/create-task.dto';
-import { UpdateTaskDto } from './dto/update-task.dto';
-import { Task } from '@prisma/client';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ValidationPipe,
+  ParseUUIDPipe,
+  NotFoundException,
+} from "@nestjs/common";
+import { TaskService } from "./task.service";
+import { CreateTaskDto } from "./dto/create-task.dto";
+import { UpdateTaskDto } from "./dto/update-task.dto";
+import { Task } from "@prisma/client";
 
-@Controller('tasks')
+@Controller("tasks")
 export class TaskController {
   constructor(private readonly taskService: TaskService) {}
 
   @Post()
-  async create(@Body(ValidationPipe) createTaskDto: CreateTaskDto): Promise<Task> {
+  async create(
+    @Body(ValidationPipe) createTaskDto: CreateTaskDto,
+  ): Promise<Task> {
     return this.taskService.create(createTaskDto);
   }
 
@@ -18,8 +31,8 @@ export class TaskController {
     return this.taskService.findAll();
   }
 
-  @Get(':id')
-  async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<Task> {
+  @Get(":id")
+  async findOne(@Param("id", ParseUUIDPipe) id: string): Promise<Task> {
     const task = await this.taskService.findOne(id);
     if (!task) {
       throw new NotFoundException(`Task with ID ${id} not found`);
@@ -27,10 +40,10 @@ export class TaskController {
     return task;
   }
 
-  @Patch(':id')
+  @Patch(":id")
   async update(
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body(ValidationPipe) updateTaskDto: UpdateTaskDto
+    @Param("id", ParseUUIDPipe) id: string,
+    @Body(ValidationPipe) updateTaskDto: UpdateTaskDto,
   ): Promise<Task> {
     const updatedTask = await this.taskService.update(id, updateTaskDto);
     if (!updatedTask) {
@@ -39,8 +52,8 @@ export class TaskController {
     return updatedTask;
   }
 
-  @Delete(':id')
-  async remove(@Param('id', ParseUUIDPipe) id: string): Promise<Task> {
+  @Delete(":id")
+  async remove(@Param("id", ParseUUIDPipe) id: string): Promise<Task> {
     const deletedTask = await this.taskService.remove(id);
     if (!deletedTask) {
       throw new NotFoundException(`Task with ID ${id} not found`);
