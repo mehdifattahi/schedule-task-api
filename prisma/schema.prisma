@@ -1,0 +1,32 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Schedule {
+  id         String   @id @default(uuid())
+  accountId  Int
+  agentId    Int
+  startTime  DateTime
+  endTime    DateTime
+  tasks      Task[]
+}
+
+model Task {
+  id         String   @id @default(uuid())
+  accountId  Int
+  scheduleId String
+  startTime  DateTime
+  duration   Int
+  type       TaskType
+  schedule   Schedule @relation(fields: [scheduleId], references: [id])
+}
+
+enum TaskType {
+  break
+  work
+}
